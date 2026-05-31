@@ -1,0 +1,19 @@
+# 팀 멀티에이전트 실행 산출물 (런타임 생성)
+.team-runs/
+
+# 대시보드 — 빌드/자동조달 산출물 (커밋 안 함)
+dashboard/build/
+dashboard/.gradle/
+dashboard/.kotlin/
+dashboard/kotlin-js-store/
+dashboard/node_modules/
+dashboard/gradlew
+dashboard/gradlew.bat
+dashboard/gradle/wrapper/gradle-wrapper.jar
+dashboard/src/wasmJsMain/resources/status.json
+dashboard/src/wasmJsMain/resources/fonts/
+
+# OS / 에디터
+Thumbs.db
+.DS_Store
+/.idea/
