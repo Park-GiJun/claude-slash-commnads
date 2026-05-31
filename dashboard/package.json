@@ -1,0 +1,9 @@
+{
+  "name": "agent-pitch-dashboard",
+  "version": "1.0.0",
+  "description": "맨유 4-3-3 멀티에이전트 전술 보드 (의존성 0개)",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}

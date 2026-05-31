@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-05-31T18:30:00Z",
+  "cwd": "C:\\Users\\tpgj9\\IdeaProjects\\claude-slash-commnads",
+  "teams": [
+    {
+      "slug": "planning",
+      "title": "기획/계획 팀",
+      "stack": "도메인 무관 · AC/시나리오/리스크/지표",
+      "agents": [
+        { "name": "carrick", "display": "Michael Carrick", "role": "리드 · 종합/우선순위", "model": "opus", "usage": "심층(고비용)", "pos": "CM", "x": 0.5, "y": 0.5, "isLead": true, "status": "working", "lines": 42, "lastLine": "팀원 보고서 종합 중 — 우선순위 정렬" },
+        { "name": "mainoo", "display": "Kobbie Mainoo", "role": "요구사항 · AC/수용기준", "model": "sonnet", "usage": "표준", "pos": "ST", "x": 0.5, "y": 0.84, "isLead": false, "status": "done", "lines": 103, "lastLine": "수용 기준 12건 Given/When/Then 작성 완료" },
+        { "name": "cunha", "display": "Matheus Cunha", "role": "시나리오 · 사용자 흐름", "model": "sonnet", "usage": "표준", "pos": "RB", "x": 0.82, "y": 0.56, "isLead": false, "status": "working", "lines": 61, "lastLine": "실패/엣지 흐름 시나리오 정리" },
+        { "name": "collyer", "display": "Toby Collyer", "role": "리스크 · 의존성/제약", "model": "sonnet", "usage": "표준", "pos": "LB", "x": 0.18, "y": 0.56, "isLead": false, "status": "spawning", "lines": 0, "lastLine": "" },
+        { "name": "fredricson", "display": "Tyler Fredricson", "role": "지표 · 성공 측정", "model": "haiku", "usage": "경량(빠름·저비용)", "pos": "GK", "x": 0.5, "y": 0.1, "isLead": false, "status": "idle", "lines": 0, "lastLine": "" }
+      ]
+    },
+    {
+      "slug": "backend-dev-kotlin",
+      "title": "백엔드 개발 팀 (Kotlin)",
+      "stack": "Kotlin · Spring Boot/Ktor · Gradle · JUnit5/MockK",
+      "agents": [
+        { "name": "holland", "display": "Steve Holland", "role": "아키텍트 · 설계/종합", "model": "opus", "usage": "심층(고비용)", "pos": "CM", "x": 0.5, "y": 0.5, "isLead": true, "status": "done", "lines": 128, "lastLine": "모듈 경계·계층 청사진 종합 완료" },
+        { "name": "kone", "display": "Sékou Koné", "role": "구현 · 도메인/서비스 로직", "model": "sonnet", "usage": "표준", "pos": "ST", "x": 0.5, "y": 0.84, "isLead": false, "status": "done", "lines": 97, "lastLine": "트랜잭션 경계·동시성 처리 방안 정리" },
+        { "name": "leon", "display": "Diego León", "role": "API · 계약/인터페이스", "model": "sonnet", "usage": "표준", "pos": "RB", "x": 0.82, "y": 0.56, "isLead": false, "status": "error", "lines": 0, "lastLine": "런 마커는 있으나 산출 파일 없음" },
+        { "name": "mather", "display": "Sam Mather", "role": "테스트 작성", "model": "haiku", "usage": "경량(빠름·저비용)", "pos": "LB", "x": 0.18, "y": 0.56, "isLead": false, "status": "working", "lines": 31, "lastLine": "정상/경계/실패 경로 테스트 케이스 설계" },
+        { "name": "biancheri", "display": "Gabriele Biancheri", "role": "리뷰 · 품질/관례", "model": "sonnet", "usage": "표준", "pos": "GK", "x": 0.5, "y": 0.1, "isLead": false, "status": "idle", "lines": 0, "lastLine": "" }
+      ]
+    }
+  ]
+}

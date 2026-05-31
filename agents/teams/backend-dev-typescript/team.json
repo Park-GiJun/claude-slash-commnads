@@ -1,0 +1,58 @@
+{
+    "team":  "backend-dev-typescript",
+    "title":  "백엔드 개발 팀 (TypeScript)",
+    "stack":  "TypeScript · NestJS/Express · Node · Jest/Vitest",
+    "mode":  "advisory",
+    "lead":  {
+                 "name":  "evans",
+                 "file":  "evans.md",
+                 "role":  "아키텍트 · 설계/종합",
+                 "model":  "opus",
+                 "usage":  "심층(고비용)",
+                 "pos":  "CM",
+                 "x":  0.5,
+                 "y":  0.5
+             },
+    "members":  [
+                    {
+                        "name":  "mbeumo",
+                        "file":  "mbeumo.md",
+                        "role":  "구현 · 도메인/서비스 로직",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "ST",
+                        "x":  0.5,
+                        "y":  0.84
+                    },
+                    {
+                        "name":  "amad",
+                        "file":  "amad.md",
+                        "role":  "API · 계약/인터페이스",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "RB",
+                        "x":  0.82,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "barbosa",
+                        "file":  "barbosa.md",
+                        "role":  "테스트 작성",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "LB",
+                        "x":  0.18,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "obi",
+                        "file":  "obi.md",
+                        "role":  "리뷰 · 품질/관례",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "GK",
+                        "x":  0.5,
+                        "y":  0.1
+                    }
+                ]
+}

@@ -1,0 +1,58 @@
+{
+    "team":  "frontend-dev-vue",
+    "title":  "프론트엔드 팀 (Vue)",
+    "stack":  "Vue 3 Composition API · Pinia · Vite · Vitest/Playwright",
+    "mode":  "advisory",
+    "lead":  {
+                 "name":  "mount",
+                 "file":  "mount.md",
+                 "role":  "리드 · 설계/종합",
+                 "model":  "opus",
+                 "usage":  "심층(고비용)",
+                 "pos":  "CM",
+                 "x":  0.5,
+                 "y":  0.5
+             },
+    "members":  [
+                    {
+                        "name":  "bayindir",
+                        "file":  "bayindir.md",
+                        "role":  "컴포넌트 · UI 구현",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "ST",
+                        "x":  0.5,
+                        "y":  0.84
+                    },
+                    {
+                        "name":  "ugarte",
+                        "file":  "ugarte.md",
+                        "role":  "상태 · 데이터 흐름",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "RB",
+                        "x":  0.82,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "byrnehughes",
+                        "file":  "byrnehughes.md",
+                        "role":  "스타일 · UX/반응형",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "LB",
+                        "x":  0.18,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "watson",
+                        "file":  "watson.md",
+                        "role":  "테스트 작성",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "GK",
+                        "x":  0.5,
+                        "y":  0.1
+                    }
+                ]
+}

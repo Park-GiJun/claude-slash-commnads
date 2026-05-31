@@ -1,0 +1,58 @@
+{
+    "team":  "design",
+    "title":  "디자인 팀",
+    "stack":  "WCAG 2.1 AA · 디자인 시스템/토큰 · 프로토타입",
+    "mode":  "advisory",
+    "lead":  {
+                 "name":  "martinez",
+                 "file":  "martinez.md",
+                 "role":  "리드 · 방향/종합",
+                 "model":  "opus",
+                 "usage":  "심층(고비용)",
+                 "pos":  "CM",
+                 "x":  0.5,
+                 "y":  0.5
+             },
+    "members":  [
+                    {
+                        "name":  "heaven",
+                        "file":  "heaven.md",
+                        "role":  "UX · 플로우/정보구조",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "ST",
+                        "x":  0.5,
+                        "y":  0.84
+                    },
+                    {
+                        "name":  "lacey",
+                        "file":  "lacey.md",
+                        "role":  "비주얼 · 디자인 시스템",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "RB",
+                        "x":  0.82,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "jfletcher",
+                        "file":  "jfletcher.md",
+                        "role":  "접근성 · WCAG",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "LB",
+                        "x":  0.18,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "tfletcher",
+                        "file":  "tfletcher.md",
+                        "role":  "콘텐츠 · 카피",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "GK",
+                        "x":  0.5,
+                        "y":  0.1
+                    }
+                ]
+}

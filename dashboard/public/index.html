@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AGENT PITCH — 멀티에이전트 전술 보드</title>
+  <style>
+    :root {
+      --bg: #0e1116;
+      --panel: #151a21;
+      --panel-sel: #1e2630;
+      --line: #252c36;
+      --muted: #8a8f98;
+      --muted2: #b0b6bf;
+      --pitch1: #1b5e20;
+      --pitch2: #206522;
+      --pitch-line: rgba(255,255,255,.55);
+      --gold: #ffd54f;
+      --red: #e50914;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+    }
+
+    /* 헤더 + 내비 */
+    header { display: flex; align-items: center; gap: 14px; padding: 14px 16px; flex: 0 0 auto; }
+    .brand { font-size: 24px; font-weight: 900; letter-spacing: .5px; }
+    .subtitle { color: var(--muted2); font-size: 12px; }
+    nav { display: flex; gap: 6px; margin-left: 8px; }
+    nav a {
+      font-size: 13px; color: var(--muted2); text-decoration: none;
+      padding: 6px 12px; border-radius: 8px; border: 1px solid transparent; cursor: pointer;
+    }
+    nav a:hover { background: var(--panel); }
+    nav a.active { background: var(--panel-sel); border-color: var(--red); color: #fff; font-weight: 600; }
+    .legend { display: flex; gap: 12px; margin-left: auto; }
+    .legend .item { display: flex; align-items: center; gap: 4px; color: var(--muted2); font-size: 11px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: 0 0 auto; }
+    .conn { font-size: 11px; white-space: nowrap; }
+
+    main { flex: 1 1 auto; min-height: 0; padding: 0 16px 16px; overflow: hidden; }
+    .view { height: 100%; }
+    .view[hidden] { display: none; }
+
+    /* ===== 메인(개요) ===== */
+    .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 12px; }
+    .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+    .stat .num { font-size: 26px; font-weight: 800; line-height: 1; }
+    .stat .lbl { font-size: 11px; color: var(--muted); margin-top: 6px; }
+    .overview-scroll { height: calc(100% - 86px); overflow-y: auto; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+    .ocard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; cursor: pointer; }
+    .ocard:hover { border-color: var(--red); }
+    .ocard .otitle { font-size: 13px; font-weight: 700; }
+    .ocard .ostack { font-size: 10px; color: var(--muted); margin-top: 2px; min-height: 13px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ocard .odots { display: flex; gap: 4px; margin: 10px 0 8px; flex-wrap: wrap; }
+    .ocard .odots .dot { width: 12px; height: 12px; }
+    .ocard .ometa { display: flex; gap: 8px; font-size: 10px; color: var(--muted2); }
+    .bar { height: 6px; border-radius: 3px; background: #0b0e12; margin-top: 10px; overflow: hidden; }
+    .bar > i { display: block; height: 100%; background: var(--gold); }
+
+    /* ===== 실행 중(피치) ===== */
+    .run { display: flex; gap: 12px; height: 100%; }
+    .rail { width: 190px; flex: 0 0 auto; overflow-y: auto; }
+    .center { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+    .tasks { width: 300px; flex: 0 0 auto; overflow-y: auto; }
+    .team { display: flex; align-items: center; gap: 8px; background: var(--panel);
+      border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 6px; cursor: pointer; }
+    .team.sel { background: var(--panel-sel); border-color: var(--red); }
+    .team .body { min-width: 0; flex: 1 1 auto; }
+    .team .name { font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .team .meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+    .pitch-title { font-size: 18px; font-weight: 700; }
+    .pitch-stack { font-size: 11px; color: var(--muted); }
+    .field { position: relative; flex: 1 1 auto; margin-top: 8px; border-radius: 12px; overflow: hidden; min-height: 0;
+      background: repeating-linear-gradient(to bottom, var(--pitch1) 0, var(--pitch1) 12.5%, var(--pitch2) 12.5%, var(--pitch2) 25%); }
+    .field .border { position: absolute; left: 3%; top: 2%; width: 94%; height: 96%; border: 2px solid var(--pitch-line); }
+    .field .halfway { position: absolute; left: 3%; right: 3%; top: 50%; height: 0; border-top: 2px solid var(--pitch-line); }
+    .field .circle { position: absolute; left: 50%; top: 50%; width: 20%; aspect-ratio: 1; border: 2px solid var(--pitch-line); border-radius: 50%; transform: translate(-50%, -50%); }
+    .field .goalbox { position: absolute; left: 30%; width: 40%; height: 14%; border: 2px solid var(--pitch-line); }
+    .field .goalbox.top { top: 2%; }
+    .field .goalbox.bottom { bottom: 2%; }
+    .token { position: absolute; width: 88px; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
+    .badge { width: 40px; height: 40px; margin: 0 auto; border-radius: 50%; background: #101418;
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; border: 3px solid #8a8f98; }
+    .badge.lead { box-shadow: 0 0 0 1px var(--gold); }
+    .badge.pulse { animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+    .token .pname { font-size: 11px; font-weight: 600; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .token .tags { display: flex; gap: 3px; justify-content: center; align-items: center; margin-top: 2px; }
+    .model { font-size: 8px; padding: 0 4px; border-radius: 3px; color: #fff; }
+    .pos { font-size: 9px; color: #cfd4da; }
+    .tasks h2 { font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+    .task { background: var(--panel); border-radius: 8px; padding: 10px; margin-bottom: 6px; }
+    .task .row { display: flex; align-items: center; gap: 6px; }
+    .task .who { font-size: 12px; font-weight: 600; }
+    .task .st { font-size: 10px; margin-left: auto; }
+    .task .role { font-size: 10px; color: #9aa1ab; margin-top: 2px; }
+    .task .last { font-size: 10px; color: #cfd4da; margin-top: 3px;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .task .lines { font-size: 9px; color: #6b7280; margin-top: 3px; }
+
+    /* ===== 히스토리 ===== */
+    .hist-scroll { height: 100%; overflow-y: auto; }
+    .hentry { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; }
+    .hentry > summary { list-style: none; cursor: pointer; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+    .hentry > summary::-webkit-details-marker { display: none; }
+    .hentry .htime { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .hentry .htitle { font-size: 13px; font-weight: 700; }
+    .hentry .hbadge { font-size: 10px; color: var(--muted2); background: var(--panel-sel); border-radius: 12px; padding: 2px 8px; }
+    .hentry .hright { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .hbody { padding: 0 14px 12px; }
+    .hagent { display: flex; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); }
+    .hagent .ha-name { font-size: 12px; font-weight: 600; width: 150px; flex: 0 0 auto; }
+    .hagent .ha-role { font-size: 10px; color: var(--muted); }
+    .hagent .ha-last { font-size: 10px; color: #cfd4da; margin-top: 2px; }
+    .hagent .ha-lines { font-size: 10px; color: #6b7280; margin-left: auto; flex: 0 0 auto; }
+
+    .empty { color: var(--muted2); padding: 24px; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand">AGENT PITCH</div>
+      <div class="subtitle">맨유 멀티에이전트 전술 보드</div>
+    </div>
+    <nav id="nav">
+      <a data-view="main">메인</a>
+      <a data-view="running">실행 중</a>
+      <a data-view="history">히스토리</a>
+    </nav>
+    <div class="legend" id="legend"></div>
+    <div class="conn" id="conn">● 연결 중…</div>
+  </header>
+
+  <main>
+    <!-- 메인(개요) -->
+    <section class="view" id="view-main" hidden>
+      <div class="stats" id="stats"></div>
+      <div class="overview-scroll"><div class="grid" id="grid"></div></div>
+    </section>
+
+    <!-- 실행 중(피치) -->
+    <section class="view" id="view-running" hidden>
+      <div class="run">
+        <div class="rail" id="rail"></div>
+        <div class="center">
+          <div id="pitchHead"></div>
+          <div class="field" id="field">
+            <div class="border"></div>
+            <div class="goalbox top"></div>
+            <div class="goalbox bottom"></div>
+            <div class="halfway"></div>
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="tasks"><h2>업무 현황</h2><div id="taskPanel"></div></div>
+      </div>
+    </section>
+
+    <!-- 히스토리 -->
+    <section class="view" id="view-history" hidden>
+      <div class="hist-scroll" id="histScroll"></div>
+    </section>
+  </main>
+
+  <script>
+    // ---- 색상 ----
+    const STATUS_COLOR = { working:"#FFB300", done:"#43A047", spawning:"#42A5F5", error:"#E53935", idle:"#8A8F98" };
+    const statusColor = s => STATUS_COLOR[s] || STATUS_COLOR.idle;
+    const MODEL_COLOR = { haiku:"#7E57C2", opus:"#D81B60", sonnet:"#26A69A" };
+    const modelColor = m => MODEL_COLOR[m] || MODEL_COLOR.sonnet;
+
+    function initials(name) {
+      const p = (name||"").trim().split(/\s+/).filter(Boolean);
+      if (!p.length) return "?";
+      if (p.length === 1) return p[0].slice(0,2).toUpperCase();
+      return (p[0][0] + p[p.length-1][0]).toUpperCase();
+    }
+    const lastName = name => {
+      const p = (name||"").trim().split(/\s+/).filter(Boolean);
+      return p.length ? p[p.length-1] : name;
+    };
+    const isActive = a => a.status === "working" || a.status === "spawning";
+
+    const LEGEND = [["idle","idle"],["spawning","spawn"],["working","work"],["done","done"],["error","err"]];
+
+    const el = (tag, cls, txt) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (txt != null) n.textContent = txt;
+      return n;
+    };
+    const fmtTime = ts => {
+      if (!ts) return "";
+      const d = new Date(ts);
+      return isNaN(d) ? ts.slice(0,19).replace("T"," ") : d.toLocaleString("ko-KR", { hour12:false });
+    };
+
+    let selected = 0;
+    let doc = { generatedAt:"", teams:[] };
+    let currentView = "main";
+
+    // ---- 내비게이션 ----
+    function setView(v) {
+      currentView = v;
+      for (const sec of document.querySelectorAll(".view")) sec.hidden = (sec.id !== "view-" + v);
+      for (const a of document.querySelectorAll("nav a")) a.classList.toggle("active", a.dataset.view === v);
+      if (location.hash.slice(1) !== v) location.hash = v;
+      render();
+      if (v === "history") loadHistory();
+    }
+    document.getElementById("nav").addEventListener("click", e => {
+      const a = e.target.closest("a[data-view]");
+      if (a) { e.preventDefault(); setView(a.dataset.view); }
+    });
+    window.addEventListener("hashchange", () => {
+      const v = location.hash.slice(1);
+      if (["main","running","history"].includes(v) && v !== currentView) setView(v);
+    });
+
+    // ---- 범례 ----
+    function renderLegend() {
+      const box = document.getElementById("legend");
+      for (const [st, label] of LEGEND) {
+        const item = el("div", "item");
+        const d = el("span", "dot"); d.style.background = statusColor(st);
+        item.append(d, el("span", null, label));
+        box.append(item);
+      }
+    }
+
+    // ---- 메인(개요) ----
+    function renderOverview() {
+      const teams = doc.teams || [];
+      const all = teams.flatMap(t => t.agents || []);
+      const counts = {
+        teams: teams.length,
+        agents: all.length,
+        active: all.filter(isActive).length,
+        done: all.filter(a => a.status === "done").length,
+        error: all.filter(a => a.status === "error").length,
+      };
+      const stats = [
+        ["팀", counts.teams, "#fff"],
+        ["에이전트", counts.agents, "#fff"],
+        ["활성", counts.active, STATUS_COLOR.working],
+        ["완료", counts.done, STATUS_COLOR.done],
+        ["에러", counts.error, STATUS_COLOR.error],
+      ];
+      const sbox = document.getElementById("stats");
+      sbox.innerHTML = "";
+      for (const [lbl, num, color] of stats) {
+        const c = el("div", "stat");
+        const n = el("div", "num", num); n.style.color = color;
+        c.append(n, el("div", "lbl", lbl));
+        sbox.append(c);
+      }
+
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+      teams.forEach((t, i) => {
+        const agents = t.agents || [];
+        const active = agents.filter(isActive).length;
+        const done = agents.filter(a => a.status === "done").length;
+        const idle = agents.length - active - done;
+        const card = el("div", "ocard");
+        card.onclick = () => { selected = i; setView("running"); };
+        card.append(el("div", "otitle", t.title));
+        card.append(el("div", "ostack", t.stack || ""));
+        const dots = el("div", "odots");
+        agents.forEach(a => { const d = el("span", "dot"); d.style.background = statusColor(a.status); d.title = `${a.display} · ${a.status}`; dots.append(d); });
+        card.append(dots);
+        const meta = el("div", "ometa");
+        meta.append(el("span", null, `활성 ${active}`), el("span", null, `완료 ${done}`), el("span", null, `대기 ${idle}`));
+        card.append(meta);
+        const bar = el("div", "bar"); const fill = el("i");
+        fill.style.width = (agents.length ? (done / agents.length * 100) : 0) + "%";
+        bar.append(fill); card.append(bar);
+        grid.append(card);
+      });
+    }
+
+    // ---- 실행 중(피치) ----
+    function renderRail() {
+      const rail = document.getElementById("rail");
+      rail.innerHTML = "";
+      (doc.teams || []).forEach((t, i) => {
+        const agents = t.agents || [];
+        const active = agents.filter(isActive).length;
+        const done = agents.filter(a => a.status === "done").length;
+        const card = el("div", "team" + (i === selected ? " sel" : ""));
+        card.onclick = () => { selected = i; render(); };
+        const d = el("span", "dot");
+        d.style.background = active > 0 ? statusColor("working") : done > 0 ? statusColor("done") : statusColor("idle");
+        const body = el("div", "body");
+        body.append(el("div", "name", t.title), el("div", "meta", `${agents.length}명 · 활성 ${active}`));
+        card.append(d, body);
+        rail.append(card);
+      });
+    }
+
+    function renderPitch(team) {
+      const head = document.getElementById("pitchHead");
+      head.innerHTML = "";
+      const field = document.getElementById("field");
+      field.querySelectorAll(".token").forEach(n => n.remove());
+      if (!team) { head.append(el("div", "empty", "팀 없음")); return; }
+      head.append(el("div", "pitch-title", team.title));
+      if (team.stack) head.append(el("div", "pitch-stack", team.stack));
+      (team.agents || []).forEach(a => {
+        const tok = el("div", "token");
+        tok.style.left = (a.x * 100) + "%";
+        tok.style.top = (a.y * 100) + "%";
+        const badge = el("div", "badge", initials(a.display));
+        badge.style.borderColor = statusColor(a.status);
+        if (a.isLead) badge.classList.add("lead");
+        if (isActive(a)) badge.classList.add("pulse");
+        tok.append(badge);
+        tok.append(el("div", "pname", (a.isLead ? "© " : "") + lastName(a.display)));
+        const tags = el("div", "tags");
+        const m = el("span", "model", a.model); m.style.background = modelColor(a.model);
+        tags.append(m, el("span", "pos", a.pos));
+        tok.append(tags);
+        field.append(tok);
+      });
+    }
+
+    function renderTasks(team) {
+      const panel = document.getElementById("taskPanel");
+      panel.innerHTML = "";
+      if (!team) return;
+      (team.agents || []).forEach(a => {
+        const card = el("div", "task");
+        const row = el("div", "row");
+        const d = el("span", "dot"); d.style.background = statusColor(a.status);
+        row.append(d, el("span", "who", a.display));
+        const st = el("span", "st", a.status); st.style.color = statusColor(a.status);
+        row.append(st);
+        card.append(row, el("div", "role", a.role));
+        if (a.lastLine) card.append(el("div", "last", a.lastLine));
+        if (a.lines > 0) card.append(el("div", "lines", `${a.lines} 줄`));
+        panel.append(card);
+      });
+    }
+
+    // ---- 히스토리 ----
+    async function loadHistory() {
+      const box = document.getElementById("histScroll");
+      try {
+        const res = await fetch("history.json?t=" + Date.now(), { cache: "no-store" });
+        const list = res.ok ? await res.json() : [];
+        renderHistory(Array.isArray(list) ? list : []);
+      } catch {
+        box.innerHTML = "";
+        box.append(el("div", "empty", "히스토리를 불러올 수 없습니다."));
+      }
+    }
+    function renderHistory(list) {
+      const box = document.getElementById("histScroll");
+      box.innerHTML = "";
+      if (!list.length) { box.append(el("div", "empty", "완료된 런 기록이 아직 없습니다.")); return; }
+      [...list].reverse().forEach(h => {
+        const d = el("details", "hentry");
+        const sum = el("summary");
+        sum.append(el("span", "htime", fmtTime(h.ts)));
+        sum.append(el("span", "htitle", h.title));
+        const right = el("div", "hright");
+        right.append(el("span", "hbadge", `${(h.agents||[]).length}명`));
+        right.append(el("span", "hbadge", `${h.totalLines||0} 줄`));
+        sum.append(right);
+        d.append(sum);
+        const body = el("div", "hbody");
+        (h.agents || []).forEach(a => {
+          const row = el("div", "hagent");
+          const left = el("div");
+          left.append(el("div", "ha-name", a.name));
+          left.append(el("div", "ha-role", a.role));
+          if (a.lastLine) left.append(el("div", "ha-last", a.lastLine));
+          row.append(left);
+          row.append(el("div", "ha-lines", `${a.lines||0} 줄`));
+          body.append(row);
+        });
+        d.append(body);
+        box.append(d);
+      });
+    }
+
+    // ---- 공통 렌더/폴링 ----
+    function render() {
+      if (selected >= (doc.teams || []).length) selected = 0;
+      const team = (doc.teams || [])[selected] || null;
+      if (currentView === "main") renderOverview();
+      else if (currentView === "running") { renderRail(); renderPitch(team); renderTasks(team); }
+    }
+
+    function setConn(ok) {
+      const c = document.getElementById("conn");
+      if (ok) { c.textContent = "● " + (doc.generatedAt || "").slice(0,19).replace("T"," "); c.style.color = "#66BB6A"; }
+      else { c.textContent = "● 연결 끊김"; c.style.color = "#E53935"; }
+    }
+
+    async function poll() {
+      try {
+        const res = await fetch("status.json?t=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        doc = await res.json();
+        render();
+        setConn(true);
+      } catch { setConn(false); }
+    }
+
+    renderLegend();
+    const start = location.hash.slice(1);
+    setView(["main","running","history"].includes(start) ? start : "main");
+    poll();
+    setInterval(poll, 2000);
+  </script>
+</body>
+</html>

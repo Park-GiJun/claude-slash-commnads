@@ -1,0 +1,67 @@
+{
+    "team":  "review-team",
+    "title":  "리뷰 팀 (Review Team)",
+    "formation":  "맨유 25/26 · 수비 라인이 변경분을 막아선다",
+    "lead":  {
+                 "name":  "bruno",
+                 "file":  "bruno.md",
+                 "role":  "주장 · 종합/우선순위/머지 권고",
+                 "model":  "opus",
+                 "usage":  "심층(고비용)",
+                 "pos":  "CM",
+                 "x":  0.5,
+                 "y":  0.52
+             },
+    "members":  [
+                    {
+                        "name":  "casemiro",
+                        "file":  "casemiro.md",
+                        "role":  "수비형 미드 · 보안/데이터 안전",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "DM",
+                        "x":  0.5,
+                        "y":  0.34
+                    },
+                    {
+                        "name":  "yoro",
+                        "file":  "yoro.md",
+                        "role":  "센터백 · 아키텍처/경계",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "CB",
+                        "x":  0.34,
+                        "y":  0.2
+                    },
+                    {
+                        "name":  "shaw",
+                        "file":  "shaw.md",
+                        "role":  "풀백 · 정확성/엣지케이스",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "CB",
+                        "x":  0.66,
+                        "y":  0.2
+                    },
+                    {
+                        "name":  "dalot",
+                        "file":  "dalot.md",
+                        "role":  "풀백 · 성능/효율",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "RM",
+                        "x":  0.84,
+                        "y":  0.5
+                    },
+                    {
+                        "name":  "lammens",
+                        "file":  "lammens.md",
+                        "role":  "골키퍼 · 검증/테스트 게이트",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "GK",
+                        "x":  0.5,
+                        "y":  0.08
+                    }
+                ]
+}

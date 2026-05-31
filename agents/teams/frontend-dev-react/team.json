@@ -1,0 +1,58 @@
+{
+    "team":  "frontend-dev-react",
+    "title":  "프론트엔드 팀 (React)",
+    "stack":  "React 19 · hooks · Vite/Next · Vitest/RTL/Playwright",
+    "mode":  "advisory",
+    "lead":  {
+                 "name":  "deligt",
+                 "file":  "deligt.md",
+                 "role":  "리드 · 설계/종합",
+                 "model":  "opus",
+                 "usage":  "심층(고비용)",
+                 "pos":  "CM",
+                 "x":  0.5,
+                 "y":  0.5
+             },
+    "members":  [
+                    {
+                        "name":  "munro",
+                        "file":  "munro.md",
+                        "role":  "컴포넌트 · UI 구현",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "ST",
+                        "x":  0.5,
+                        "y":  0.84
+                    },
+                    {
+                        "name":  "dorgu",
+                        "file":  "dorgu.md",
+                        "role":  "상태 · 데이터 흐름",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "RB",
+                        "x":  0.82,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "ogunneye",
+                        "file":  "ogunneye.md",
+                        "role":  "스타일 · UX/반응형",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "LB",
+                        "x":  0.18,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "aljofree",
+                        "file":  "aljofree.md",
+                        "role":  "테스트 작성",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "GK",
+                        "x":  0.5,
+                        "y":  0.1
+                    }
+                ]
+}

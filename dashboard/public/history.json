@@ -1,0 +1,30 @@
+[
+  {
+    "ts": "2026-05-31T14:12:03Z",
+    "slug": "design",
+    "title": "디자인 팀",
+    "stack": "WCAG 2.1 AA · 디자인 시스템/토큰 · 프로토타입",
+    "totalLines": 284,
+    "agents": [
+      { "name": "Lisandro Martínez", "role": "리드 · 방향/종합", "model": "opus", "lines": 96, "lastLine": "디자인 방향 단일안 종합 — 토큰 우선 접근" },
+      { "name": "Ayden Heaven", "role": "UX · 플로우/정보구조", "model": "sonnet", "lines": 71, "lastLine": "온보딩 3단계 플로우 + 빈/에러 상태 정의" },
+      { "name": "Shea Lacey", "role": "비주얼 · 디자인 시스템", "model": "haiku", "lines": 42, "lastLine": "간격/타이포 스케일 8pt 기준 정리" },
+      { "name": "Jack Fletcher", "role": "접근성 · WCAG", "model": "sonnet", "lines": 51, "lastLine": "대비비 AA 검증, 포커스 링 누락 3건 지적" },
+      { "name": "Tyler Fletcher", "role": "콘텐츠 · 카피", "model": "haiku", "lines": 24, "lastLine": "에러 메시지 행동유도형으로 재작성" }
+    ]
+  },
+  {
+    "ts": "2026-05-31T15:47:19Z",
+    "slug": "planning",
+    "title": "기획/계획 팀",
+    "stack": "도메인 무관 · AC/시나리오/리스크/지표",
+    "totalLines": 433,
+    "agents": [
+      { "name": "Michael Carrick", "role": "리드 · 종합/우선순위", "model": "opus", "lines": 107, "lastLine": "열린 질문 3건 정리 후 우선순위 확정" },
+      { "name": "Kobbie Mainoo", "role": "요구사항 · AC/수용기준", "model": "sonnet", "lines": 103, "lastLine": "수용 기준 Given/When/Then 12건" },
+      { "name": "Matheus Cunha", "role": "시나리오 · 사용자 흐름", "model": "sonnet", "lines": 93, "lastLine": "성공 AC: 완료 M/N 표기 권고" },
+      { "name": "Toby Collyer", "role": "리스크 · 의존성/제약", "model": "sonnet", "lines": 78, "lastLine": ".team-runs gitignore 등록 여부 확인 필요" },
+      { "name": "Tyler Fredricson", "role": "지표 · 성공 측정", "model": "haiku", "lines": 52, "lastLine": "planning 실패는 치명적 — 의존성 명확화 필요" }
+    ]
+  }
+]

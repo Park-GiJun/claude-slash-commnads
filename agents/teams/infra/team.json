@@ -1,0 +1,58 @@
+{
+    "team":  "infra",
+    "title":  "인프라 팀",
+    "stack":  "Docker · CI(GitHub Actions/GitLab) · IaC · 모니터링",
+    "mode":  "advisory",
+    "lead":  {
+                 "name":  "mawson",
+                 "file":  "mawson.md",
+                 "role":  "리드 · 설계/종합",
+                 "model":  "opus",
+                 "usage":  "심층(고비용)",
+                 "pos":  "CM",
+                 "x":  0.5,
+                 "y":  0.5
+             },
+    "members":  [
+                    {
+                        "name":  "heaton",
+                        "file":  "heaton.md",
+                        "role":  "CI/CD · 파이프라인",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "ST",
+                        "x":  0.5,
+                        "y":  0.84
+                    },
+                    {
+                        "name":  "harrison",
+                        "file":  "harrison.md",
+                        "role":  "배포 · 컨테이너/IaC",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "RB",
+                        "x":  0.82,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "heath",
+                        "file":  "heath.md",
+                        "role":  "관측성 · 로깅/모니터링",
+                        "model":  "haiku",
+                        "usage":  "경량(빠름·저비용)",
+                        "pos":  "LB",
+                        "x":  0.18,
+                        "y":  0.56
+                    },
+                    {
+                        "name":  "murdock",
+                        "file":  "murdock.md",
+                        "role":  "보안 · 시크릿/접근제어",
+                        "model":  "sonnet",
+                        "usage":  "표준",
+                        "pos":  "GK",
+                        "x":  0.5,
+                        "y":  0.1
+                    }
+                ]
+}

@@ -1,19 +1,27 @@
-# 팀 멀티에이전트 실행 산출물 (런타임 생성)
+# ===== Build / Gradle =====
+build/
+.gradle/
+.kotlin/
+*.class
+
+# ===== Node =====
+node_modules/
+
+# ===== IDE / OS =====
+.idea/
+*.iml
+.DS_Store
+*.log
+.gitignore~
+tmp/
+
+# ===== Claude (로컬 설정) =====
+.claude/
+
+# ===== Team runs (psmux 산출물; 민감정보 가능) =====
 .team-runs/
 
-# 대시보드 — 빌드/자동조달 산출물 (커밋 안 함)
-dashboard/build/
-dashboard/.gradle/
-dashboard/.kotlin/
-dashboard/kotlin-js-store/
-dashboard/node_modules/
-dashboard/gradlew
-dashboard/gradlew.bat
-dashboard/gradle/wrapper/gradle-wrapper.jar
-dashboard/src/wasmJsMain/resources/status.json
-dashboard/src/wasmJsMain/resources/fonts/
-
-# OS / 에디터
-Thumbs.db
-.DS_Store
-/.idea/
+# ===== 백업/복제 잡파일 =====
+*.backup
+* copy*.md
+*copy.md
