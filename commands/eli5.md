@@ -1,7 +1,7 @@
 ---
 description: 코드 조각이나 개념을 세 단계 깊이로 설명한다 (직관 → 동작 → 깊이)
 argument-hint: <개념 또는 코드 영역> (생략 시 현재 선택/맥락의 코드)
-allowed-tools: Read, Grep, Glob
+allowed-tools: Bash(powershell:*), Read, Grep, Glob
 ---
 
 `$ARGUMENTS` 를 설명 대상으로 삼는다. 비어 있으면 현재 대화 맥락에서 가장 최근에
@@ -21,3 +21,8 @@ allowed-tools: Read, Grep, Glob
 엣지 케이스, 또는 대안과의 트레이드오프. 모르는 건 모른다고 한다.
 
 마지막에 **"다음에 볼 것"** 한 줄 — 이걸 이해했으면 이어서 볼 만한 연관 개념/파일.
+
+### 대시보드 추적
+- 시작 시: `powershell -File scripts/log-command.ps1 -Command eli5 -Status running -Note "<설명 대상>"`
+- 종료 시: `powershell -File scripts/log-command.ps1 -Command eli5 -Status done` (실패 시 `-Status error`)
+- 이 기록은 대시보드 "커맨드" 탭에 표시된다. 로깅 실패는 무시하고 본 작업을 계속한다.

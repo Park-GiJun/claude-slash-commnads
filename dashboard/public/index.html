@@ -123,6 +123,16 @@
     .hagent .ha-last { font-size: 10px; color: #cfd4da; margin-top: 2px; }
     .hagent .ha-lines { font-size: 10px; color: #6b7280; margin-left: auto; flex: 0 0 auto; }
 
+    /* ===== 커맨드 ===== */
+    .cmd { display: flex; align-items: center; gap: 10px; background: var(--panel);
+      border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 6px; }
+    .cmd .ctime { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; width: 150px; flex: 0 0 auto; }
+    .cmd .cname { font-size: 13px; font-weight: 700; width: 110px; flex: 0 0 auto; }
+    .cmd .cnote { font-size: 11px; color: #cfd4da; flex: 1 1 auto; min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cmd .cstatus { font-size: 10px; font-weight: 600; padding: 2px 10px; border-radius: 12px; flex: 0 0 auto; }
+    .cmd .cstatus.running { animation: pulse 1.4s ease-in-out infinite; }
+
     .empty { color: var(--muted2); padding: 24px; text-align: center; }
   </style>
 </head>
@@ -135,6 +145,7 @@
     <nav id="nav">
       <a data-view="main">메인</a>
       <a data-view="running">실행 중</a>
+      <a data-view="commands">커맨드</a>
       <a data-view="history">히스토리</a>
     </nav>
     <div class="legend" id="legend"></div>
@@ -164,6 +175,11 @@
         </div>
         <div class="tasks"><h2>업무 현황</h2><div id="taskPanel"></div></div>
       </div>
+    </section>
+
+    <!-- 커맨드 -->
+    <section class="view" id="view-commands" hidden>
+      <div class="hist-scroll" id="cmdScroll"></div>
     </section>
 
     <!-- 히스토리 -->
@@ -217,6 +233,7 @@
       if (location.hash.slice(1) !== v) location.hash = v;
       render();
       if (v === "history") loadHistory();
+      if (v === "commands") loadCommands();
     }
     document.getElementById("nav").addEventListener("click", e => {
       const a = e.target.closest("a[data-view]");
@@ -224,7 +241,7 @@
     });
     window.addEventListener("hashchange", () => {
       const v = location.hash.slice(1);
-      if (["main","running","history"].includes(v) && v !== currentView) setView(v);
+      if (["main","running","commands","history"].includes(v) && v !== currentView) setView(v);
     });
 
     // ---- 범례 ----
@@ -394,12 +411,43 @@
       });
     }
 
+    // ---- 커맨드 ----
+    const CMD_COLOR = { running: "#FFB300", done: "#43A047", error: "#E53935" };
+    async function loadCommands() {
+      const box = document.getElementById("cmdScroll");
+      try {
+        const res = await fetch("commands.json?t=" + Date.now(), { cache: "no-store" });
+        const list = res.ok ? await res.json() : [];
+        renderCommands(Array.isArray(list) ? list : []);
+      } catch {
+        box.innerHTML = "";
+        box.append(el("div", "empty", "커맨드 기록을 불러올 수 없습니다."));
+      }
+    }
+    function renderCommands(list) {
+      const box = document.getElementById("cmdScroll");
+      box.innerHTML = "";
+      if (!list.length) { box.append(el("div", "empty", "실행된 커맨드 기록이 아직 없습니다.")); return; }
+      [...list].reverse().forEach(c => {
+        const row = el("div", "cmd");
+        row.append(el("div", "ctime", fmtTime(c.ts)));
+        row.append(el("div", "cname", "/" + c.command));
+        row.append(el("div", "cnote", c.note || ""));
+        const st = el("div", "cstatus" + (c.status === "running" ? " running" : ""), c.status);
+        const col = CMD_COLOR[c.status] || "#8A8F98";
+        st.style.background = col + "22"; st.style.color = col;
+        row.append(st);
+        box.append(row);
+      });
+    }
+
     // ---- 공통 렌더/폴링 ----
     function render() {
       if (selected >= (doc.teams || []).length) selected = 0;
       const team = (doc.teams || [])[selected] || null;
       if (currentView === "main") renderOverview();
       else if (currentView === "running") { renderRail(); renderPitch(team); renderTasks(team); }
+      else if (currentView === "commands") loadCommands();
     }
 
     function setConn(ok) {
@@ -420,7 +468,7 @@
 
     renderLegend();
     const start = location.hash.slice(1);
-    setView(["main","running","history"].includes(start) ? start : "main");
+    setView(["main","running","commands","history"].includes(start) ? start : "main");
     poll();
     setInterval(poll, 2000);
   </script>

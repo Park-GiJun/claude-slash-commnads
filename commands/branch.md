@@ -18,3 +18,8 @@ allowed-tools: Bash, Read
 기본 브랜치(`main`/`master`)가 최신인지 확인하고, 거기서 새 브랜치를 만들어 체크아웃한다.
 이미 커밋되지 않은 변경이 있으면 그대로 따라오므로 그 사실만 알린다.
 생성한 브랜치명을 보고한다.
+
+### 대시보드 추적
+- 시작 시: `powershell -File scripts/log-command.ps1 -Command branch -Status running -Note "<브랜치 설명>"`
+- 종료 시: `powershell -File scripts/log-command.ps1 -Command branch -Status done` (실패 시 `-Status error`)
+- 이 기록은 대시보드 "커맨드" 탭에 표시된다. 로깅 실패는 무시하고 본 작업을 계속한다.

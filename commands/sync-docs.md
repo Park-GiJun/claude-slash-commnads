@@ -25,3 +25,8 @@ allowed-tools: Read, Grep, Glob, Edit, Bash
 
 ### 4. 보고
 무엇이 어긋나 있었고 무엇을 고쳤는지 목록으로. 확신이 안 서 손대지 않은 항목도 함께 남긴다.
+
+### 대시보드 추적
+- 시작 시: `powershell -File scripts/log-command.ps1 -Command sync-docs -Status running -Note "<대상 요약>"`
+- 종료 시: `powershell -File scripts/log-command.ps1 -Command sync-docs -Status done` (실패 시 `-Status error`)
+- 이 기록은 대시보드 "커맨드" 탭에 표시된다. 로깅 실패는 무시하고 본 작업을 계속한다.

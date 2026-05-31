@@ -27,3 +27,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\run-pipeline.ps1 -Ta
 - 실행은 **순차**(planning 완료 후 후속 팀)다 — 의존성과 토큰/시간 관리를 위해.
 - 끝나면 런처가 출력한 `90-summary.md` 경로를 읽어 사용자에게 핵심을 요약해 줘도 된다.
 - 흐름만 점검하려면 스크립트에 `-DryRun` 을 붙인다(실제 claude 실행 없음).
+
+### 대시보드 추적
+- 시작 시: `powershell -File scripts/log-command.ps1 -Command squad -Status running -Note "<작업 요약>"`
+- 종료 시: `powershell -File scripts/log-command.ps1 -Command squad -Status done` (실패 시 `-Status error`)
+- 이 기록은 대시보드 "커맨드" 탭에 표시된다. 로깅 실패는 무시하고 본 작업을 계속한다.

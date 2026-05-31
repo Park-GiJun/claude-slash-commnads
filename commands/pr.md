@@ -33,3 +33,8 @@ allowed-tools: Bash, Read
 - 없으면 푸시까지만 하고, 호스트의 "compare" URL 또는 생성된 제목·본문을 출력해
   사용자가 수동으로 열 수 있게 한다.
 - **머지는 절대 자동으로 하지 않는다.** 생성된 PR URL을 보고한다.
+
+### 대시보드 추적
+- 시작 시: `powershell -File scripts/log-command.ps1 -Command pr -Status running -Note "<PR 요약>"`
+- 종료 시: `powershell -File scripts/log-command.ps1 -Command pr -Status done` (실패 시 `-Status error`)
+- 이 기록은 대시보드 "커맨드" 탭에 표시된다. 로깅 실패는 무시하고 본 작업을 계속한다.

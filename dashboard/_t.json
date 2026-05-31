@@ -1,0 +1,17 @@
+[
+    {
+        "ts":  "2026-05-31T20:17:01.5858721+09:00",
+        "command":  "pr",
+        "status":  "done",
+        "note":  "검증",
+        "cwd":  "C:\\Users\\tpgj9\\IdeaProjects\\claude-slash-commnads",
+        "endedAt":  "2026-05-31T20:17:04.6322268+09:00"
+    },
+    {
+        "ts":  "2026-05-31T20:23:04.2305516+09:00",
+        "command":  "pr",
+        "status":  "running",
+        "note":  "검증",
+        "cwd":  "C:\\Users\\tpgj9\\IdeaProjects\\claude-slash-commnads"
+    }
+]

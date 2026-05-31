@@ -31,3 +31,8 @@ Conventional Commits 형식:
 ### 3. 커밋
 필요한 파일을 스테이징하고 커밋한다. **푸시는 하지 않는다** (그건 `/pr` 몫).
 커밋 후 `git log -1 --stat` 결과를 짧게 보고한다.
+
+### 대시보드 추적
+- 시작 시: `powershell -File scripts/log-command.ps1 -Command commit -Status running -Note "<커밋 요약>"`
+- 종료 시: `powershell -File scripts/log-command.ps1 -Command commit -Status done` (실패 시 `-Status error`)
+- 이 기록은 대시보드 "커맨드" 탭에 표시된다. 로깅 실패는 무시하고 본 작업을 계속한다.

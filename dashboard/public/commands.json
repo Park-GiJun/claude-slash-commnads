@@ -1,0 +1,5 @@
+[
+  { "ts": "2026-05-31T16:02:11Z", "command": "team", "status": "done", "note": "review-team · 커밋 전 점검", "cwd": "C:\\Users\\tpgj9\\IdeaProjects\\claude-slash-commnads", "endedAt": "2026-05-31T16:05:47Z" },
+  { "ts": "2026-05-31T16:20:03Z", "command": "commit", "status": "done", "note": "대시보드 Node 전환", "cwd": "C:\\Users\\tpgj9\\IdeaProjects\\claude-slash-commnads", "endedAt": "2026-05-31T16:20:39Z" },
+  { "ts": "2026-05-31T17:41:55Z", "command": "squad", "status": "running", "note": "전체 코드베이스 리뷰", "cwd": "C:\\Users\\tpgj9\\IdeaProjects\\claude-slash-commnads" }
+]

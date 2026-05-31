@@ -20,10 +20,26 @@ npm start
   팀 카드를 누르면 해당 팀이 선택된 채 **실행 중** 뷰로 이동한다.
 - **실행 중** — 피치(전술 보드). 좌측 팀 레일 · 중앙 포메이션 · 우측 업무 현황.
   각 선수(에이전트)가 지금 어떤 상태로 무슨 일을 하는지 실시간 표시(2초 폴링).
+- **커맨드** — `commands/` 의 모든 슬래시 커맨드 실행 기록(최신순). 시각·커맨드명·메모·
+  상태(running/done/error). 실행 중인 커맨드는 주황으로 점멸.
 - **히스토리** — 완료된 런 기록(최신순). 팀이 "전원 done"이 되는 순간 서버가 적립.
   항목을 펼치면 에이전트별 산출 줄수·마지막 줄을 본다.
 
-뷰는 `#main` / `#running` / `#history` 해시로 기억되어 새로고침해도 유지된다.
+뷰는 `#main` / `#running` / `#commands` / `#history` 해시로 기억되어 새로고침해도 유지된다.
+
+## 커맨드 추적
+
+`commands/*.md` 의 모든 슬래시 커맨드는 정의 안에 **로깅 단계**를 갖는다. 실행을 시작·종료할 때
+`scripts/log-command.ps1` 을 호출해 `public/commands.json` 에 기록한다(running→done/error 갱신,
+최근 200건 유지). 대시보드의 **커맨드** 탭이 이 파일을 폴링해 보여준다.
+
+```powershell
+powershell -File scripts/log-command.ps1 -Command team -Status running -Note "review-team"
+powershell -File scripts/log-command.ps1 -Command team -Status done
+```
+
+> 로깅은 cwd가 이 저장소일 때 동작한다(상대경로 `scripts/...`). 다른 저장소에서 슬래시 커맨드를
+> 쓰면 스크립트를 못 찾아 조용히 건너뛴다 — 커맨드 본 기능은 영향받지 않는다.
 
 ## 데이터 소스
 
@@ -49,7 +65,9 @@ powershell -File scripts\gen-status.ps1 -Cwd <팀을 돌린 저장소> -Watch
 - `public/index.html` — UI 전체 (메인/실행중/히스토리 3개 뷰 + 폴링 JS)
 - `public/status.json` — 현재 상태 (샘플 포함, gen-status.ps1 이 덮어씀)
 - `public/history.json` — 완료 런 누적 (서버가 자동 적립, 샘플 시드 포함)
+- `public/commands.json` — 슬래시 커맨드 실행 기록 (log-command.ps1 이 적립)
 - `scripts/gen-status.ps1` — status.json 생성기
+- `scripts/log-command.ps1` — 커맨드 실행 로거
 
 ## 좌표
 
